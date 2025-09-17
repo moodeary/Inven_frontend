@@ -71,6 +71,14 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  // OAuth 콜백용 토큰 처리
+  async function setTokenAndFetchUser(accessToken) {
+    token.value = accessToken
+    localStorage.setItem('accessToken', accessToken)
+    apiClient.setToken(accessToken)
+    await fetchCurrentUser()
+  }
+
   return {
     user,
     token,
@@ -80,6 +88,7 @@ export const useAuthStore = defineStore('auth', () => {
     signup,
     fetchCurrentUser,
     logout,
-    initialize
+    initialize,
+    setTokenAndFetchUser
   }
 })

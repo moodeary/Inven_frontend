@@ -45,6 +45,19 @@
         </button>
       </form>
 
+      <!-- 구분선 -->
+      <div class="divider">
+        <span>또는</span>
+      </div>
+
+      <!-- 카카오 로그인 버튼 -->
+      <div class="social-login">
+        <button @click="handleKakaoLogin" class="kakao-login-button" :disabled="isLoading">
+          <span class="kakao-icon">💬</span>
+          <span>카카오로 로그인</span>
+        </button>
+      </div>
+
       <div class="signup-link">
         <p>계정이 없으신가요? <router-link to="/signup">회원가입</router-link></p>
       </div>
@@ -103,6 +116,12 @@ const handleLogin = async () => {
   } finally {
     isLoading.value = false
   }
+}
+
+// 카카오 로그인 핸들러
+const handleKakaoLogin = () => {
+  // Spring Security OAuth2 URL 사용 (state 파라미터 자동 관리)
+  window.location.href = 'http://localhost:8080/oauth2/authorization/kakao'
 }
 </script>
 
@@ -238,5 +257,72 @@ const handleLogin = async () => {
 
 .signup-link a:hover {
   text-decoration: underline;
+}
+
+/* 구분선 */
+.divider {
+  text-align: center;
+  position: relative;
+  margin: 24px 0;
+}
+
+.divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: #e1e5e9;
+}
+
+.divider span {
+  background-color: white;
+  color: #666;
+  padding: 0 16px;
+  font-size: 14px;
+  position: relative;
+}
+
+/* 소셜 로그인 */
+.social-login {
+  margin-bottom: 20px;
+}
+
+.kakao-login-button {
+  width: 100%;
+  background-color: #fee500;
+  color: #000000;
+  border: none;
+  padding: 16px 24px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  letter-spacing: -0.2px;
+  box-shadow: 0 2px 8px rgba(254, 229, 0, 0.3);
+}
+
+.kakao-login-button:hover:not(:disabled) {
+  background-color: #fada0a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(254, 229, 0, 0.4);
+}
+
+.kakao-login-button:disabled {
+  background-color: #f0f0f0;
+  color: #999;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.kakao-icon {
+  font-size: 18px;
+  filter: grayscale(0);
 }
 </style>
